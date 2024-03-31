@@ -1,7 +1,7 @@
-package br.com.abrindoportas.api.parkingcontrol.dtos;
+package br.com.abrindoportas.api.dtos;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class ParkingSpotDto {
 	
@@ -72,6 +72,4 @@ public class ParkingSpotDto {
 		this.block = block;
 	}
 
-	
-	
 }
