@@ -1,4 +1,4 @@
-package br.com.abrindoportas.api.controllers;
+package br.com.abrindoportas.api.parkingcontrol.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.abrindoportas.api.dtos.ParkingSpotDto;
-import br.com.abrindoportas.api.model.ParkingSpotModel;
-import br.com.abrindoportas.api.repositories.ParkingSpotRepository;
-import br.com.abrindoportas.api.services.ParkingSpotService;
+import br.com.abrindoportas.api.parkingcontrol.dtos.ParkingSpotDto;
+import br.com.abrindoportas.api.parkingcontrol.model.ParkingSpotModel;
+import br.com.abrindoportas.api.parkingcontrol.repositories.ParkingSpotRepository;
+import br.com.abrindoportas.api.parkingcontrol.services.ParkingSpotService;
 
 
 @RestController
-//@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/parking-spot")
 public class ParkingSpotController {
 	
