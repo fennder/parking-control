@@ -1,4 +1,4 @@
-package br.com.abrindoportas;
+package br.com.abrindoportas.api.parkingcontrol.services;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -8,8 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.abrindoportas.api.model.ParkingSpotModel;
-import br.com.abrindoportas.api.repositories.ParkingSpotRepository;
+import br.com.abrindoportas.api.parkingcontrol.model.ParkingSpotModel;
+import br.com.abrindoportas.api.parkingcontrol.repositories.ParkingSpotRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -26,16 +26,16 @@ public class ParkingSpotService {
         return parkingSpotRepository.save(parkingSpotModel);
     }
 
-    public boolean existsByLicensePlateCar(String licensePlateCar) {
-        return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
+    public boolean existsByLicensePaterCar(String licensePlateCar) {
+        return parkingSpotRepository.existsByLicensePaterCar(licensePlateCar);
     }
 
     public boolean existsByParkingSpotNumber(String parkingSpotNumber) {
         return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
     }
 
-    public boolean existsByApartmentAndBlock(String apartment, String block) {
-        return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
+    public boolean existsByApartmentAndBlock(String apartmet, String block) {
+        return parkingSpotRepository.existsByApartmetAndBlock(apartmet, block);
     }
 
     public Page<ParkingSpotModel> findAll(Pageable pageable) {

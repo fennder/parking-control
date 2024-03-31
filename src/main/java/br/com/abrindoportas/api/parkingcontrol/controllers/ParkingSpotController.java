@@ -1,11 +1,9 @@
-package br.com.abrindoportas.api.controllers;
+package br.com.abrindoportas.api.parkingcontrol.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
-
-
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
@@ -24,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.abrindoportas.ParkingSpotService;
-import br.com.abrindoportas.api.dtos.ParkingSpotDto;
-import br.com.abrindoportas.api.model.ParkingSpotModel;
+import br.com.abrindoportas.api.parkingcontrol.dtos.ParkingSpotDto;
+import br.com.abrindoportas.api.parkingcontrol.model.ParkingSpotModel;
+import br.com.abrindoportas.api.parkingcontrol.services.ParkingSpotService;
 import jakarta.validation.Valid;
 
 
@@ -45,7 +43,7 @@ public class ParkingSpotController {
 	
 	@PostMapping
 	public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDto parkingSpotDto){
-		if(parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePaterCar())){
+		if(parkingSpotService.existsByLicensePaterCar(parkingSpotDto.getLicensePaterCar())){
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: License Plate Car is already in use!");
 	  }
 	  if(parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
@@ -64,7 +62,6 @@ public class ParkingSpotController {
     public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpots(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
     }
-
     
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneParkingSpot(@PathVariable(value = "id") UUID id){
@@ -92,10 +89,15 @@ public class ParkingSpotController {
       if (!parkingSpotModelOptional.isPresent()) {
           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found.");
       }
-      var parkingSpotModel = new ParkingSpotModel();
-      BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
-      parkingSpotModel.setId(parkingSpotModelOptional.get().getId());
-      parkingSpotModel.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
+      var parkingSpotModel = parkingSpotModelOptional.get();
+      parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
+      parkingSpotModel.setLicensePaterCar(parkingSpotDto.getLicensePaterCar());
+      parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
+      parkingSpotModel.setBrandCar(parkingSpotDto.getBrandCar());
+      parkingSpotModel.setColorCar(parkingSpotDto.getColorCar());
+      parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
+      parkingSpotModel.setApartmet(parkingSpotDto.getApartmet());
+      parkingSpotModel.setBlock(parkingSpotDto.getBlock());
       return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel));
     }  
 
